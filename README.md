@@ -73,10 +73,11 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
                           (.csv) | dimensions: Tipo de arquivo exportado do
                           Dimensions (.csv) | txt: Tipo de arquivo .txt
     -i INPUT_FILE, --input_file INPUT_FILE
-                          Arquivo exportado ou de texto que contem a lista dos
+                          Arquivo exportado do Scopus, Web of Science, PubMed,
+                          Dimensions ou arquivo de texto que contem uma lista de
                           DOIs
     -o OUTPUT, --output OUTPUT
-                          Pasta de saida com a formatação nova
+                          Pasta de saida
     --version             show program's version number and exit
 
   Thank you!
