@@ -2,7 +2,7 @@ format-input
 ======================
 [![License](https://poser.pugx.org/badges/poser/license.svg)](./LICENSE)
 
-Script that formats, in Excel files (.xlsx), the tabulated files (.csv) exported from Scopus, Web of Science, PubMed, Dimensions or a text file (.txt)
+Script that formats, in Excel files (.xlsx), the tabulated files (.csv) exported from Scopus, Web of Science, PubMed, Dimensions or a text file (.txt).
 
 ## Table of content
 
@@ -87,14 +87,16 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
 * [Glen Jasper](https://github.com/glenjasper)
 
 ## Organization
-* [Molecular and Computational Biology of Fungi Laboratory](http://lbmcf.pythonanywhere.com) (LBMCF, ICB - **UFMG**, Belo Horizonte, Brazil)
+* [Molecular and Computational Biology of Fungi Laboratory](http://lbmcf.pythonanywhere.com) (LBMCF, ICB - **UFMG**, Belo Horizonte, Brazil).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+Copyright (c) 2020 [Glen Jasper](https://github.com/glenjasper).
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ## Acknowledgments
 
-* Aristóteles Góes-Neto
-* Rosimeire Floripes
-* Joyce da Cruz Ferraz
+* Dr. Aristóteles Góes-Neto
+* MSc. Rosimeire Floripes
+* MSc. Joyce da Cruz Ferraz
