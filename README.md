@@ -2,7 +2,7 @@ format-input
 ======================
 [![License](https://poser.pugx.org/badges/poser/license.svg)](./LICENSE)
 
-Script that formats, in Excel files (.xlsx), the tabulated files (.csv) exported from Scopus, Web of Science, PubMed, Dimensions or a text file (.txt).
+Script that formats, in Excel files (.xlsx), the tabulated files (.csv) exported from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [Dimensions](https://app.dimensions.ai) or a text file (.txt).
 
 ## Table of content
 
