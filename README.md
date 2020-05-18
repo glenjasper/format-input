@@ -46,7 +46,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) instal
   $ cd format-input
 
   # Run the app
-  $ python3 format-input.py --help
+  $ python3 format_input.py --help
 ```
 
 ### Download
