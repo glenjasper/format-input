@@ -92,8 +92,6 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
 
 ## License
 
-Copyright (c) 2020 [Glen Jasper](https://github.com/glenjasper).
-
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ## Acknowledgments
