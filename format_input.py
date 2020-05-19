@@ -11,8 +11,8 @@ import pandas as pd
 def menu(args):
     parser = argparse.ArgumentParser(description = "Script que faz a formatação, em arquivos Excel (.xlsx), os arquivos tabulados (.csv) exportadas do Scopus, Web of Science, PubMed, Dimensions ou de um arquivo de texto (.txt)", epilog = "Thank you!")
     parser.add_argument("-t", "--type_file", choices = ofi.ARRAY_TYPE, required = True, type = str.lower, help = ofi.mode_information(ofi.ARRAY_TYPE, ofi.ARRAY_DESCRIPTION))
-    parser.add_argument("-i", "--input_file", required = True, help = "Arquivo exportado ou de texto que contem a lista dos DOIs")
-    parser.add_argument("-o", "--output", help = "Pasta de saida com a formatação nova")
+    parser.add_argument("-i", "--input_file", required = True, help = "Arquivo exportado do Scopus, Web of Science, PubMed, Dimensions ou arquivo de texto que contem uma lista de DOIs")
+    parser.add_argument("-o", "--output", help = "Pasta de saida")
     parser.add_argument("--version", action = "version", version = "%s %s" % ('%(prog)s', ofi.VERSION))
     args = parser.parse_args()
 
