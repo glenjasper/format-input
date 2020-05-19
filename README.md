@@ -101,3 +101,4 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 * Dr. Aristóteles Góes-Neto
 * MSc. Rosimeire Floripes
 * MSc. Joyce da Cruz Ferraz
+* MSc. Danitza Xiomara Romero Calle
