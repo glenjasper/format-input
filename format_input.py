@@ -78,6 +78,7 @@ class FormatInput:
         self.scopus_col_doi = 'DOI'
         self.scopus_col_document_type = 'Document Type'
         self.scopus_col_languaje = 'Language of Original Document'
+        self.scopus_col_cited_by = 'Cited by'
         # self.scopus_col_access_type = 'Access Type'
         # self.scopus_col_source = 'Source'
 
@@ -88,6 +89,7 @@ class FormatInput:
         self.wos_col_doi = 'DI'
         self.wos_col_document_type = 'DT'
         self.wos_col_languaje = 'LA'
+        self.wos_col_cited_by = 'TC'
 
         # PubMed
         self.pubmed_col_authors = 'Description'
@@ -96,6 +98,7 @@ class FormatInput:
         self.pubmed_col_doi = 'Details'
         self.pubmed_col_document_type = '' # Doesn't exist
         self.pubmed_col_languaje = '' # Doesn't exist
+        self.pubmed_col_cited_by = '' # Doesn't exist
 
         # Dimensions
         self.dimensions_col_authors = 'Authors'
@@ -104,6 +107,7 @@ class FormatInput:
         self.dimensions_col_doi = 'DOI'
         self.dimensions_col_document_type = 'Publication Type'
         self.dimensions_col_languaje = '' # Doesn't exist
+        self.dimensions_col_cited_by = 'Times cited'
 
         # Xls Summary
         self.XLS_FILE = 'input_<type>.xlsx'
@@ -118,6 +122,7 @@ class FormatInput:
         self.xls_col_doi = 'DOI'
         self.xls_col_document_type = 'Document Type'
         self.xls_col_languaje = 'Language'
+        self.xls_col_cited_by = 'Cited By'
         self.xls_col_authors = 'Author(s)'
 
         self.xls_col_redundancy_type = 'Redundancy Type'
@@ -130,6 +135,7 @@ class FormatInput:
                                 self.xls_col_doi,
                                 self.xls_col_document_type,
                                 self.xls_col_languaje,
+                                self.xls_col_cited_by,
                                 self.xls_col_authors]
 
         self.xls_columns_txt = [self.xls_col_item,
@@ -289,6 +295,7 @@ class FormatInput:
                 collect[self.xls_col_doi] = doi
                 collect[self.xls_col_document_type] = row[self.scopus_col_document_type].strip() if row[self.scopus_col_document_type] is not None else row[self.scopus_col_document_type]
                 collect[self.xls_col_languaje] = row[self.scopus_col_languaje].strip() if row[self.scopus_col_languaje] is not None else row[self.scopus_col_languaje]
+                collect[self.xls_col_cited_by] = row[self.scopus_col_cited_by] if row[self.scopus_col_cited_by] is not None else 0
             elif self.TYPE_FILE == self.TYPE_WOS:
                 collect[self.xls_col_authors] = row[self.wos_col_authors].strip() if row[self.wos_col_authors] is not None else row[self.wos_col_authors]
                 collect[self.xls_col_title] = row[self.wos_col_title].strip() if row[self.wos_col_title] is not None else row[self.wos_col_title]
@@ -296,6 +303,7 @@ class FormatInput:
                 collect[self.xls_col_doi] = doi
                 collect[self.xls_col_document_type] = row[self.wos_col_document_type].strip() if row[self.wos_col_document_type] is not None else row[self.wos_col_document_type]
                 collect[self.xls_col_languaje] = row[self.wos_col_languaje].strip() if row[self.wos_col_languaje] is not None else row[self.wos_col_languaje]
+                collect[self.xls_col_cited_by] = row[self.wos_col_cited_by] if row[self.wos_col_cited_by] is not None else row[self.wos_col_cited_by]
             elif self.TYPE_FILE == self.TYPE_PUBMED:
                 collect[self.xls_col_authors] = row[self.pubmed_col_authors].strip() if row[self.pubmed_col_authors] is not None else row[self.pubmed_col_authors]
                 collect[self.xls_col_title] = row[self.pubmed_col_title].strip() if row[self.pubmed_col_title] is not None else row[self.pubmed_col_title]
@@ -303,6 +311,7 @@ class FormatInput:
                 collect[self.xls_col_doi] = doi
                 collect[self.xls_col_document_type] = None
                 collect[self.xls_col_languaje] = None
+                collect[self.xls_col_cited_by] = None
             elif self.TYPE_FILE == self.TYPE_DIMENSIONS:
                 collect[self.xls_col_authors] = row[self.dimensions_col_authors].strip() if row[self.dimensions_col_authors] is not None else row[self.dimensions_col_authors]
                 collect[self.xls_col_title] = row[self.dimensions_col_title].strip() if row[self.dimensions_col_title] is not None else row[self.dimensions_col_title]
@@ -310,6 +319,7 @@ class FormatInput:
                 collect[self.xls_col_doi] = doi
                 collect[self.xls_col_document_type] = row[self.dimensions_col_document_type].strip() if row[self.dimensions_col_document_type] is not None else row[self.dimensions_col_document_type]
                 collect[self.xls_col_languaje] = None
+                collect[self.xls_col_cited_by] = row[self.dimensions_col_cited_by] if row[self.dimensions_col_cited_by] is not None else row[self.dimensions_col_cited_by]
 
             if flag_unique:
                 collect_unique_doi.update({idx + 1: collect})
@@ -391,10 +401,10 @@ class FormatInput:
                 worksheet.set_column(first_col = 3, last_col = 3, width = 33) # Column D:D
                 worksheet.set_column(first_col = 4, last_col = 4, width = 18) # Column E:E
                 worksheet.set_column(first_col = 5, last_col = 5, width = 12) # Column F:F
-
-                worksheet.set_column(first_col = 6, last_col = 6, width = 36) # Column G:G
+                worksheet.set_column(first_col = 6, last_col = 6, width = 11) # Column G:G
+                worksheet.set_column(first_col = 7, last_col = 7, width = 36) # Column H:H
                 if sheet_type == self.XLS_SHEET_REDUNDANCIES:
-                    worksheet.set_column(first_col = 7, last_col = 7, width = 19) # Column H:H
+                    worksheet.set_column(first_col = 8, last_col = 8, width = 19) # Column I:I
 
             icol = 0
             for irow, (index, item) in enumerate(dictionary.items(), start = 1):
@@ -414,9 +424,10 @@ class FormatInput:
                     worksheet.write(irow, icol + 3, col_doi, styles_rows)
                     worksheet.write(irow, icol + 4, item[self.xls_col_document_type], styles_rows)
                     worksheet.write(irow, icol + 5, item[self.xls_col_languaje], styles_rows)
-                    worksheet.write(irow, icol + 6, item[self.xls_col_authors], styles_rows)
+                    worksheet.write(irow, icol + 6, item[self.xls_col_cited_by], styles_rows)
+                    worksheet.write(irow, icol + 7, item[self.xls_col_authors], styles_rows)
                     if sheet_type == self.XLS_SHEET_REDUNDANCIES:
-                        worksheet.write(irow, icol + 7, redundancy_type, styles_rows)
+                        worksheet.write(irow, icol + 8, redundancy_type, styles_rows)
 
         workbook = xlsxwriter.Workbook(self.XLS_FILE)
 
