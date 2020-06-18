@@ -9,10 +9,10 @@ import xlsxwriter
 import pandas as pd
 
 def menu(args):
-    parser = argparse.ArgumentParser(description = "Script que faz a formatação, em arquivos Excel (.xlsx), os arquivos tabulados (.csv) exportadas do Scopus, Web of Science, PubMed, Dimensions ou de um arquivo de texto (.txt)", epilog = "Thank you!")
+    parser = argparse.ArgumentParser(description = "This script reads the exported (.csv) files from Scopus, Web of Science, PubMed or Dimensions databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.", epilog = "Thank you!")
     parser.add_argument("-t", "--type_file", choices = ofi.ARRAY_TYPE, required = True, type = str.lower, help = ofi.mode_information(ofi.ARRAY_TYPE, ofi.ARRAY_DESCRIPTION))
-    parser.add_argument("-i", "--input_file", required = True, help = "Arquivo exportado do Scopus, Web of Science, PubMed, Dimensions ou arquivo de texto que contem uma lista de DOIs")
-    parser.add_argument("-o", "--output", help = "Pasta de saida")
+    parser.add_argument("-i", "--input_file", required = True, help = "Input file .csv or .txt")
+    parser.add_argument("-o", "--output", help = "Output folder")
     parser.add_argument("--version", action = "version", version = "%s %s" % ('%(prog)s', ofi.VERSION))
     args = parser.parse_args()
 
@@ -63,11 +63,11 @@ class FormatInput:
         self.TYPE_PUBMED = "pubmed"
         self.TYPE_DIMENSIONS = "dimensions"
         self.TYPE_TXT = "txt"
-        self.DESCRIPTION_SCOPUS = "Tipo de arquivo exportado do Scopus (.csv)"
-        self.DESCRIPTION_WOS = "Tipo de arquivo exportado do Web of Science (.csv)"
-        self.DESCRIPTION_PUBMED = "Tipo de arquivo exportado do PubMed (.csv)"
-        self.DESCRIPTION_DIMENSIONS = "Tipo de arquivo exportado do Dimensions (.csv)"
-        self.DESCRIPTION_TXT = "Tipo de arquivo .txt"
+        self.DESCRIPTION_SCOPUS = "Indicates that the file (.csv) was exported from Scopus"
+        self.DESCRIPTION_WOS = "Indicates that the file (.csv) was exported from Web of Science"
+        self.DESCRIPTION_PUBMED = "Indicates that the file (.csv) was exported from PubMed"
+        self.DESCRIPTION_DIMENSIONS = "Indicates that the file (.csv) was exported from Dimensions"
+        self.DESCRIPTION_TXT = "Indicates that it is a text file (.txt)"
         self.ARRAY_TYPE = [self.TYPE_SCOPUS, self.TYPE_WOS, self.TYPE_PUBMED, self.TYPE_DIMENSIONS, self.TYPE_TXT]
         self.ARRAY_DESCRIPTION = [self.DESCRIPTION_SCOPUS, self.DESCRIPTION_WOS, self.DESCRIPTION_PUBMED, self.DESCRIPTION_DIMENSIONS, self.DESCRIPTION_TXT]
 
