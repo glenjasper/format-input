@@ -2,7 +2,7 @@ format-input
 ======================
 [![License](https://poser.pugx.org/badges/poser/license.svg)](./LICENSE)
 
-Script that formats, in Excel files (.xlsx), the tabulated files (.csv) exported from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [Dimensions](https://app.dimensions.ai) or a text file (.txt).
+This script reads the exported (.csv) files from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [Dimensions](https://app.dimensions.ai) databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.
 
 ## Table of content
 
@@ -60,24 +60,24 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
   usage: format_input.py [-h] -t {scopus,wos,pubmed,dimensions,txt} -i
                          INPUT_FILE [-o OUTPUT] [--version]
 
-  Script que faz a formatação, em arquivos Excel (.xlsx), os arquivos tabulados
-  (.csv) exportadas do Scopus, Web of Science, PubMed, Dimensions ou de um
-  arquivo de texto (.txt)
+  This script reads the exported (.csv) files from Scopus, Web of Science,
+  PubMed or Dimensions databases and turns each of them into a new file with an
+  unique format. This script will ignore duplicated records.
 
   optional arguments:
     -h, --help            show this help message and exit
     -t {scopus,wos,pubmed,dimensions,txt}, --type_file {scopus,wos,pubmed,dimensions,txt}
-                          scopus: Tipo de arquivo exportado do Scopus (.csv) |
-                          wos: Tipo de arquivo exportado do Web of Science
-                          (.csv) | pubmed: Tipo de arquivo exportado do PubMed
-                          (.csv) | dimensions: Tipo de arquivo exportado do
-                          Dimensions (.csv) | txt: Tipo de arquivo .txt
+                          scopus: Indicates that the file (.csv) was exported
+                          from Scopus | wos: Indicates that the file (.csv) was
+                          exported from Web of Science | pubmed: Indicates that
+                          the file (.csv) was exported from PubMed | dimensions:
+                          Indicates that the file (.csv) was exported from
+                          Dimensions | txt: Indicates that it is a text file
+                          (.txt)
     -i INPUT_FILE, --input_file INPUT_FILE
-                          Arquivo exportado do Scopus, Web of Science, PubMed,
-                          Dimensions ou arquivo de texto que contem uma lista de
-                          DOIs
+                          Input file .csv or .txt
     -o OUTPUT, --output OUTPUT
-                          Pasta de saida
+                          Output folder
     --version             show program's version number and exit
 
   Thank you!
