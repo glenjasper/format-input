@@ -113,7 +113,7 @@ class FormatInput:
         self.XLS_FILE = 'input_<type>.xlsx'
         self.XLS_SHEET_DETAIL = 'Detail'
         self.XLS_SHEET_WITHOUT_DOI = 'Without DOI'
-        self.XLS_SHEET_REDUNDANCIES = 'Redundancies'
+        self.XLS_SHEET_DUPLICATES = 'Duplicates'
 
         # Xls Columns
         self.xls_col_item = 'Item'
@@ -125,7 +125,7 @@ class FormatInput:
         self.xls_col_cited_by = 'Cited By'
         self.xls_col_authors = 'Author(s)'
 
-        self.xls_col_redundancy_type = 'Redundancy Type'
+        self.xls_col_duplicate_type = 'Duplicate Type'
         self.xls_val_by_doi = 'By DOI'
         self.xls_val_by_title = 'By Title'
 
@@ -204,7 +204,7 @@ class FormatInput:
         content = open(file, 'r').readlines()
 
         collect_unique = {}
-        collect_redundant_doi = {}
+        collect_duplicate_doi = {}
         nr_doi = []
         index = 1
         for idx, line in enumerate(content, start = 1):
@@ -223,11 +223,11 @@ class FormatInput:
                     collect_unique.update({index: collect})
                     index += 1
                 else:
-                    collect[self.xls_col_redundancy_type] = self.xls_val_by_doi
-                    collect_redundant_doi.update({idx: collect})
+                    collect[self.xls_col_duplicate_type] = self.xls_val_by_doi
+                    collect_duplicate_doi.update({idx: collect})
 
         collect_papers = {self.XLS_SHEET_DETAIL: collect_unique,
-                          self.XLS_SHEET_REDUNDANCIES: collect_redundant_doi}
+                          self.XLS_SHEET_DUPLICATES: collect_duplicate_doi}
 
         return collect_papers
 
@@ -250,12 +250,12 @@ class FormatInput:
 
         # Get DOIs
         collect_unique_doi = {}
-        collect_redundant_doi = {}
+        collect_duplicate_doi = {}
         collect_without_doi = {}
         nr_doi = []
         for idx, row in df.iterrows():
             flag_unique = False
-            flag_redundant_doi = False
+            flag_duplicate_doi = False
             flag_null = False
 
             doi = row[_col_doi]
@@ -283,7 +283,7 @@ class FormatInput:
                     nr_doi.append(doi)
                     flag_unique = True
                 else:
-                    flag_redundant_doi = True
+                    flag_duplicate_doi = True
             else:
                 flag_null = True
 
@@ -323,15 +323,15 @@ class FormatInput:
 
             if flag_unique:
                 collect_unique_doi.update({idx + 1: collect})
-            if flag_redundant_doi:
-                collect[self.xls_col_redundancy_type] = self.xls_val_by_doi
-                collect_redundant_doi.update({idx + 1: collect})
+            if flag_duplicate_doi:
+                collect[self.xls_col_duplicate_type] = self.xls_val_by_doi
+                collect_duplicate_doi.update({idx + 1: collect})
             if flag_null:
                 collect_without_doi.update({idx + 1: collect})
 
         # Get titles
         collect_unique = {}
-        collect_redundant_title = {}
+        collect_duplicate_title = {}
         nr_title = []
         index = 1
         for idx, row in collect_unique_doi.items():
@@ -352,17 +352,17 @@ class FormatInput:
                 collect_unique.update({index: row})
                 index += 1
             else:
-                row[self.xls_col_redundancy_type] = self.xls_val_by_title
-                collect_redundant_title.update({idx: row})
+                row[self.xls_col_duplicate_type] = self.xls_val_by_title
+                collect_duplicate_title.update({idx: row})
 
-        collect_redundant = {}
-        collect_redundant = collect_redundant_doi.copy()
-        collect_redundant.update(collect_redundant_title)
-        collect_redundant = {item[0]: item[1] for item in sorted(collect_redundant.items())}
+        collect_duplicate = {}
+        collect_duplicate = collect_duplicate_doi.copy()
+        collect_duplicate.update(collect_duplicate_title)
+        collect_duplicate = {item[0]: item[1] for item in sorted(collect_duplicate.items())}
 
         collect_papers = {self.XLS_SHEET_DETAIL: collect_unique,
                           self.XLS_SHEET_WITHOUT_DOI: collect_without_doi,
-                          self.XLS_SHEET_REDUNDANCIES: collect_redundant}
+                          self.XLS_SHEET_DUPLICATES: collect_duplicate}
 
         return collect_papers
 
@@ -374,8 +374,8 @@ class FormatInput:
             else:
                 _xls_columns = self.xls_columns_csv.copy()
 
-            if sheet_type == self.XLS_SHEET_REDUNDANCIES:
-                _xls_columns.append(self.xls_col_redundancy_type)
+            if sheet_type == self.XLS_SHEET_DUPLICATES:
+                _xls_columns.append(self.xls_col_duplicate_type)
 
             _last_col = len(_xls_columns) - 1
 
@@ -392,7 +392,7 @@ class FormatInput:
             if self.TYPE_FILE == self.TYPE_TXT:
                 worksheet.set_column(first_col = 0, last_col = 0, width = 7)  # Column A:A
                 worksheet.set_column(first_col = 1, last_col = 1, width = 33) # Column B:B
-                if sheet_type == self.XLS_SHEET_REDUNDANCIES:
+                if sheet_type == self.XLS_SHEET_DUPLICATES:
                     worksheet.set_column(first_col = 2, last_col = 2, width = 19) # Column C:C
             else:
                 worksheet.set_column(first_col = 0, last_col = 0, width = 7)  # Column A:A
@@ -403,20 +403,20 @@ class FormatInput:
                 worksheet.set_column(first_col = 5, last_col = 5, width = 12) # Column F:F
                 worksheet.set_column(first_col = 6, last_col = 6, width = 11) # Column G:G
                 worksheet.set_column(first_col = 7, last_col = 7, width = 36) # Column H:H
-                if sheet_type == self.XLS_SHEET_REDUNDANCIES:
+                if sheet_type == self.XLS_SHEET_DUPLICATES:
                     worksheet.set_column(first_col = 8, last_col = 8, width = 19) # Column I:I
 
             icol = 0
             for irow, (index, item) in enumerate(dictionary.items(), start = 1):
                 col_doi = item[self.xls_col_doi]
-                if sheet_type == self.XLS_SHEET_REDUNDANCIES:
-                    redundancy_type = item[self.xls_col_redundancy_type]
+                if sheet_type == self.XLS_SHEET_DUPLICATES:
+                    duplicate_type = item[self.xls_col_duplicate_type]
 
                 if self.TYPE_FILE == self.TYPE_TXT:
                     worksheet.write(irow, icol + 0, index, styles_rows)
                     worksheet.write(irow, icol + 1, col_doi, styles_rows)
-                    if sheet_type == self.XLS_SHEET_REDUNDANCIES:
-                        worksheet.write(irow, icol + 2, redundancy_type, styles_rows)
+                    if sheet_type == self.XLS_SHEET_DUPLICATES:
+                        worksheet.write(irow, icol + 2, duplicate_type, styles_rows)
                 else:
                     worksheet.write(irow, icol + 0, index, styles_rows)
                     worksheet.write(irow, icol + 1, item[self.xls_col_title], styles_rows)
@@ -426,8 +426,8 @@ class FormatInput:
                     worksheet.write(irow, icol + 5, item[self.xls_col_languaje], styles_rows)
                     worksheet.write(irow, icol + 6, item[self.xls_col_cited_by], styles_rows)
                     worksheet.write(irow, icol + 7, item[self.xls_col_authors], styles_rows)
-                    if sheet_type == self.XLS_SHEET_REDUNDANCIES:
-                        worksheet.write(irow, icol + 8, redundancy_type, styles_rows)
+                    if sheet_type == self.XLS_SHEET_DUPLICATES:
+                        worksheet.write(irow, icol + 8, duplicate_type, styles_rows)
 
         workbook = xlsxwriter.Workbook(self.XLS_FILE)
 
@@ -442,7 +442,7 @@ class FormatInput:
         create_sheet(workbook, self.XLS_SHEET_DETAIL, data_paper[self.XLS_SHEET_DETAIL], cell_format_title, cell_format_row)
         if self.TYPE_FILE != self.TYPE_TXT:
             create_sheet(workbook, self.XLS_SHEET_WITHOUT_DOI, data_paper[self.XLS_SHEET_WITHOUT_DOI], cell_format_title, cell_format_row)
-        create_sheet(workbook, self.XLS_SHEET_REDUNDANCIES, data_paper[self.XLS_SHEET_REDUNDANCIES], cell_format_title, cell_format_row)
+        create_sheet(workbook, self.XLS_SHEET_DUPLICATES, data_paper[self.XLS_SHEET_DUPLICATES], cell_format_title, cell_format_row)
 
         workbook.close()
 
