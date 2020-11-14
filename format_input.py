@@ -92,10 +92,10 @@ class FormatInput:
         self.wos_col_cited_by = 'TC'
 
         # PubMed
-        self.pubmed_col_authors = 'Description'
+        self.pubmed_col_authors = 'Authors'
         self.pubmed_col_title = 'Title'
-        self.pubmed_col_year = 'Properties'
-        self.pubmed_col_doi = 'Details'
+        self.pubmed_col_year = 'Publication Year'
+        self.pubmed_col_doi = 'DOI'
         self.pubmed_col_document_type = '' # Doesn't exist
         self.pubmed_col_languaje = '' # Doesn't exist
         self.pubmed_col_cited_by = '' # Doesn't exist
@@ -256,25 +256,9 @@ class FormatInput:
         for idx, row in df.iterrows():
             flag_unique = False
             flag_duplicate_doi = False
-            flag_null = False
+            flag_without_doi = False
 
             doi = row[_col_doi]
-            if self.TYPE_FILE == self.TYPE_PUBMED:
-                info = doi.split('doi:')
-                if len(info) > 1:
-                    info = info[1].split()
-                    doi = info[0]
-                else:
-                    doi = None
-
-                info = row[self.pubmed_col_year]
-                info = info.split('create date:')
-                if len(info) > 1:
-                    info = info[1].split('/')
-                    year = int(info[0])
-                else:
-                    year = None
-
             if doi is not None:
                 doi = doi.strip()
                 doi = doi.lower()
@@ -285,7 +269,7 @@ class FormatInput:
                 else:
                     flag_duplicate_doi = True
             else:
-                flag_null = True
+                flag_without_doi = True
 
             collect = {}
             if self.TYPE_FILE == self.TYPE_SCOPUS:
@@ -307,7 +291,7 @@ class FormatInput:
             elif self.TYPE_FILE == self.TYPE_PUBMED:
                 collect[self.xls_col_authors] = row[self.pubmed_col_authors].strip() if row[self.pubmed_col_authors] is not None else row[self.pubmed_col_authors]
                 collect[self.xls_col_title] = row[self.pubmed_col_title].strip() if row[self.pubmed_col_title] is not None else row[self.pubmed_col_title]
-                collect[self.xls_col_year] = year
+                collect[self.xls_col_year] = row[self.pubmed_col_year]
                 collect[self.xls_col_doi] = doi
                 collect[self.xls_col_document_type] = None
                 collect[self.xls_col_languaje] = None
@@ -326,7 +310,7 @@ class FormatInput:
             if flag_duplicate_doi:
                 collect[self.xls_col_duplicate_type] = self.xls_val_by_doi
                 collect_duplicate_doi.update({idx + 1: collect})
-            if flag_null:
+            if flag_without_doi:
                 collect_without_doi.update({idx + 1: collect})
 
         # Get titles
