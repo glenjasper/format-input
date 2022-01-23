@@ -7,6 +7,8 @@ import argparse
 import traceback
 import xlsxwriter
 import pandas as pd
+from colorama import init
+init()
 
 def menu(args):
     parser = argparse.ArgumentParser(description = "This script reads the exported (.csv) files from Scopus, Web of Science, PubMed or Dimensions databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.", epilog = "Thank you!")
