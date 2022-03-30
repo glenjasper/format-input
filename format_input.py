@@ -6,6 +6,7 @@ import time
 import argparse
 import traceback
 import xlsxwriter
+import numpy as np
 import pandas as pd
 from colorama import init
 init()
@@ -247,8 +248,9 @@ class FormatInput:
             separator = ','
             _col_doi = self.dimensions_col_doi
 
-        df = pd.read_csv(filepath_or_buffer = file, sep = separator, header = 0, index_col = False)
-        df = df.where(pd.notnull(df), None)
+        df = pd.read_csv(filepath_or_buffer = file, sep = separator, header = 0, index_col = False) # low_memory = False
+        # df = df.where(pd.notnull(df), None)
+        df = df.replace({np.nan: None})
 
         # Get DOIs
         collect_unique_doi = {}
