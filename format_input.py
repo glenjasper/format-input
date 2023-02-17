@@ -99,7 +99,7 @@ class FormatInput:
 
         # PubMed
         self.pubmed_col_authors = 'Authors'
-        self.pubmed_col_title = 'Title'
+        self.pubmed_col_title = 'Titles'
         self.pubmed_col_year = 'Publication Year'
         self.pubmed_col_doi = 'DOI'
         self.pubmed_col_document_type = '' # Doesn't exist
