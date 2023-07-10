@@ -29,6 +29,7 @@ This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopu
 ```sh
   $ sudo pip3 install argparse
   $ sudo pip3 install xlsxwriter
+  $ sudo pip3 install numpy
   $ sudo pip3 install pandas
   $ sudo pip3 install colorama
 ```
