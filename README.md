@@ -2,7 +2,7 @@ format-input
 ======================
 [![License](https://poser.pugx.org/badges/poser/license.svg)](./LICENSE)
 
-This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc), [Dimensions](https://app.dimensions.ai) or Google Scholar exported from [Publish or Perish](https://harzing.com/resources/publish-or-perish) databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.
+This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc), [Dimensions](https://app.dimensions.ai), Cochrane, Embase, IEEE, BVS, CAB, or Google Scholar exported from [Publish or Perish](https://harzing.com/resources/publish-or-perish) databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.
 
 ## Table of content
 
@@ -59,13 +59,13 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
 
 ```sh
 $ python3 format_input.py --help
-usage: format_input.py [-h] -t {scopus,wos,pubmed,pmc,dimensions,scholar,txt} -i
+usage: format_input.py [-h] -t {scopus,wos,pubmed,pmc,dimensions,scholar,cochrane,embase,ieee,bvs,cab,txt} -i
                        INPUT_FILE [-o OUTPUT] [--version]
 
 This script reads the exported (.csv|.txt) files from Scopus, Web of Science, PubMed,
-PubMed Central, Dimensions or Google Scholar (exported from Publish or Perish)
-databases and turns each of them into a new file with an unique format. This script
-will ignore duplicated records.
+PubMed Central, Dimensions, Cochrane, Embase, IEEE, BVS, CAB, or Google Scholar (exported
+from Publish or Perish) databases and turns each of them into a new file with an unique
+format. This script will ignore duplicated records.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -77,8 +77,13 @@ optional arguments:
                         exported from PubMed Central, necessarily in MEDLINE format |
                         dimensions: Indicates that the file (.csv) was exported from
                         Dimensions | scholar: Indicates that the file (.csv) was
-                        exported from Publish or Perish (Google Scholar option) | txt:
-                        Indicates that it is a text file (.txt)
+                        exported from Publish or Perish (Google Scholar option) |
+                        cochrane: Indicates that the file (.csv) was exported from
+                        Cochrane | embase: Indicates that the file (.csv) was exported
+                        from Embase | ieee: Indicates that the file (.csv) was exported
+                        from IEEE | bvs: Indicates that the file (.csv) was exported
+                        from BVS | cab: Indicates that the file (.csv) was exported
+                        from CAB | txt: Indicates that it is a text file (.txt)
   -i INPUT_FILE, --input_file INPUT_FILE
                         Input file .csv or .txt
   -o OUTPUT, --output OUTPUT
