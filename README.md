@@ -2,7 +2,7 @@ format-input
 ======================
 [![License](https://poser.pugx.org/badges/poser/license.svg)](./LICENSE)
 
-This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc), [Dimensions](https://app.dimensions.ai), Cochrane, Embase, IEEE, BVS, CAB, or Google Scholar exported from [Publish or Perish](https://harzing.com/resources/publish-or-perish) databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.
+This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopus.com), [Web of Science](https://clarivate.com/webofsciencegroup/solutions/web-of-science), [PubMed](https://www.ncbi.nlm.nih.gov/pubmed), [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc) or [Dimensions](https://app.dimensions.ai) databases and turns each of them into a new file with an unique format. This script will ignore duplicated records.
 
 ## Table of content
 
@@ -29,7 +29,6 @@ This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopu
 ```sh
   $ sudo pip3 install argparse
   $ sudo pip3 install xlsxwriter
-  $ sudo pip3 install numpy
   $ sudo pip3 install pandas
   $ sudo pip3 install colorama
 ```
@@ -58,39 +57,33 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
 ## How To Use
 
 ```sh
-$ python3 format_input.py --help
-usage: format_input.py [-h] -t {scopus,wos,pubmed,pmc,dimensions,scholar,cochrane,embase,ieee,bvs,cab,txt} -i
-                       INPUT_FILE [-o OUTPUT] [--version]
+  $ python3 format_input.py --help
+  usage: format_input.py [-h] -t {scopus,wos,pubmed,pmc,dimensions,txt} -i
+                         INPUT_FILE [-o OUTPUT] [--version]
 
-This script reads the exported (.csv|.txt) files from Scopus, Web of Science, PubMed,
-PubMed Central, Dimensions, Cochrane, Embase, IEEE, BVS, CAB, or Google Scholar (exported
-from Publish or Perish) databases and turns each of them into a new file with an unique
-format. This script will ignore duplicated records.
+  This script reads the exported (.csv|.txt) files from Scopus, Web of Science,
+  PubMed, PubMed Central or Dimensions databases and turns each of them into a
+  new file with an unique format. This script will ignore duplicated records.
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -t {scopus,wos,pubmed,pmc,dimensions,scholar,txt}, --type_file {scopus,wos,pubmed,pmc,dimensions,scholar,txt}
-                        scopus: Indicates that the file (.csv) was exported from
-                        Scopus | wos: Indicates that the file (.csv) was exported from
-                        Web of Science | pubmed: Indicates that the file (.csv) was
-                        exported from PubMed | pmc: Indicates that the file (.txt) was
-                        exported from PubMed Central, necessarily in MEDLINE format |
-                        dimensions: Indicates that the file (.csv) was exported from
-                        Dimensions | scholar: Indicates that the file (.csv) was
-                        exported from Publish or Perish (Google Scholar option) |
-                        cochrane: Indicates that the file (.csv) was exported from
-                        Cochrane | embase: Indicates that the file (.csv) was exported
-                        from Embase | ieee: Indicates that the file (.csv) was exported
-                        from IEEE | bvs: Indicates that the file (.csv) was exported
-                        from BVS | cab: Indicates that the file (.csv) was exported
-                        from CAB | txt: Indicates that it is a text file (.txt)
-  -i INPUT_FILE, --input_file INPUT_FILE
-                        Input file .csv or .txt
-  -o OUTPUT, --output OUTPUT
-                        Output folder
-  --version             show program's version number and exit
+  optional arguments:
+    -h, --help            show this help message and exit
+    -t {scopus,wos,pubmed,pmc,dimensions,txt}, --type_file {scopus,wos,pubmed,pmc,dimensions,txt}
+                          scopus: Indicates that the file (.csv) was exported
+                          from Scopus | wos: Indicates that the file (.csv) was
+                          exported from Web of Science | pubmed: Indicates that
+                          the file (.csv) was exported from PubMed | pmc:
+                          Indicates that the file (.txt) was exported from
+                          PubMed Central, necessarily in MEDLINE format |
+                          dimensions: Indicates that the file (.csv) was
+                          exported from Dimensions | txt: Indicates that it is a
+                          text file (.txt)
+    -i INPUT_FILE, --input_file INPUT_FILE
+                          Input file .csv or .txt
+    -o OUTPUT, --output OUTPUT
+                          Output folder
+    --version             show program's version number and exit
 
-Thank you!
+  Thank you!
 ```
 
 ## Author
