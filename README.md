@@ -59,31 +59,39 @@ You can [download](https://github.com/glenjasper/format-input/archive/master.zip
 
 ```sh
 $ python3 format_input.py --help
-usage: format_input.py [-h] -t {scopus,wos,pubmed,pmc,dimensions,scholar,cochrane,embase,ieee,bvs,cab,txt} -i
-                       INPUT_FILE [-o OUTPUT] [--version]
+usage: format_input.py [-h] -t
+                       {scopus,wos,pubmed,pmc,dimensions,scholar,cochrane,embase,sciencedirect,ieee,bvs,cab,scielo,txt}
+                       -i INPUT_FILE [-o OUTPUT] [--version]
 
-This script reads the exported (.csv|.txt) files from Scopus, Web of Science, PubMed,
-PubMed Central, Dimensions, Cochrane, Embase, IEEE, BVS, CAB, or Google Scholar (exported
-from Publish or Perish) databases and turns each of them into a new file with an unique
-format. This script will ignore duplicated records.
+This script reads the exported (.csv|.txt) files from Scopus, Web of Science,
+PubMed, PubMed Central, Dimensions, Cochrane, Embase, ScienceDirect, IEEE,
+BVS, CAB, SciELO, or Google Scholar (exported from Publish or Perish)
+databases and turns each of them into a new file with an unique format. This
+script will ignore duplicated records.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -t {scopus,wos,pubmed,pmc,dimensions,scholar,txt}, --type_file {scopus,wos,pubmed,pmc,dimensions,scholar,txt}
-                        scopus: Indicates that the file (.csv) was exported from
-                        Scopus | wos: Indicates that the file (.csv) was exported from
-                        Web of Science | pubmed: Indicates that the file (.csv) was
-                        exported from PubMed | pmc: Indicates that the file (.txt) was
-                        exported from PubMed Central, necessarily in MEDLINE format |
-                        dimensions: Indicates that the file (.csv) was exported from
-                        Dimensions | scholar: Indicates that the file (.csv) was
-                        exported from Publish or Perish (Google Scholar option) |
-                        cochrane: Indicates that the file (.csv) was exported from
-                        Cochrane | embase: Indicates that the file (.csv) was exported
-                        from Embase | ieee: Indicates that the file (.csv) was exported
-                        from IEEE | bvs: Indicates that the file (.csv) was exported
-                        from BVS | cab: Indicates that the file (.csv) was exported
-                        from CAB | txt: Indicates that it is a text file (.txt)
+  -t {scopus,wos,pubmed,pmc,dimensions,scholar,cochrane,embase,sciencedirect,ieee,bvs,cab,scielo,txt}, --type_file {scopus,wos,pubmed,pmc,dimensions,scholar,cochrane,embase,sciencedirect,ieee,bvs,cab,scielo,txt}
+                        scopus: Indicates that the file (.csv) was exported
+                        from Scopus | wos: Indicates that the file (.csv) was
+                        exported from Web of Science | pubmed: Indicates that
+                        the file (.csv) was exported from PubMed | pmc:
+                        Indicates that the file (.txt) was exported from
+                        PubMed Central, necessarily in MEDLINE format |
+                        dimensions: Indicates that the file (.csv) was
+                        exported from Dimensions | scholar: Indicates that the
+                        file (.csv) was exported from Publish or Perish
+                        (Google Scholar option) | cochrane: Indicates that the
+                        file (.csv) was exported from Cochrane | embase:
+                        Indicates that the file (.csv) was exported from
+                        Embase | sciencedirect: Indicates that the file (.ris)
+                        was exported from ScienceDirect | ieee: Indicates that
+                        the file (.csv) was exported from IEEE | bvs:
+                        Indicates that the file (.csv) was exported from BVS |
+                        cab: Indicates that the file (.csv) was exported from
+                        CAB | scielo: Indicates that the file (.csv) was
+                        exported from SciELO | txt: Indicates that it is a
+                        text file (.txt)
   -i INPUT_FILE, --input_file INPUT_FILE
                         Input file .csv or .txt
   -o OUTPUT, --output OUTPUT
