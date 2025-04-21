@@ -106,7 +106,7 @@ Thank you!
 * [Glen Jasper](https://github.com/glenjasper)
 
 ## Organization
-* [Molecular and Computational Biology of Fungi Laboratory](https://sites.icb.ufmg.br/lbmcf/index.html) (LBMCF, ICB - **UFMG**, Belo Horizonte, Brazil).
+* [Molecular and Computational Biology of Fungi Laboratory](https://e3sys.com.br/grupo) (LBMCF, ICB - **UFMG**, Belo Horizonte, Brazil).
 
 ## License
 
