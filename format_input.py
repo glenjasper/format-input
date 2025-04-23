@@ -1604,9 +1604,15 @@ class FormatInput:
                     authors = []
                     keywords = []
                 elif line.startswith('AU  -'):
-                    authors.append(line.split('- ')[1].strip())
+                    arr_line = line.split('- ')
+                    if len(arr_line) > 1:
+                        author = arr_line[1].strip()
+                        authors.append(author)
                 elif line.startswith('KW  -'):
-                    keywords.append(line.split('- ')[1].strip())
+                    arr_line = line.split('- ')
+                    if len(arr_line) > 1:
+                        keyword = arr_line[1].strip()
+                        keywords.append(keyword)
                 else:
                     key_value = line.split('- ', 1)
                     if len(key_value) == 2:
@@ -1707,7 +1713,7 @@ def main():
             ofi.show_print("Reading the .csv file from Embase", [ofi.LOG_FILE], font = ofi.GREEN)
             input_information = ofi.read_csv_file()
         elif ofi.TYPE_FILE == ofi.TYPE_SCIENCEDIRECT:
-            ofi.show_print("Reading the .csv file from ScienceDirect", [ofi.LOG_FILE], font = ofi.GREEN)
+            ofi.show_print("Reading the .ris file from ScienceDirect", [ofi.LOG_FILE], font = ofi.GREEN)
             input_information = ofi.read_csv_file()
         elif ofi.TYPE_FILE == ofi.TYPE_IEEE:
             ofi.show_print("Reading the .csv file from IEEE", [ofi.LOG_FILE], font = ofi.GREEN)
