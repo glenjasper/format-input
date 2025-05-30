@@ -15,7 +15,7 @@ This script reads the exported (.csv|.txt) files from [Scopus](https://www.scopu
 - [Author](#author)
 - [Organization](#organization)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Required Attribution](#required-attribution)
 
 ## Pre-requisites
 
