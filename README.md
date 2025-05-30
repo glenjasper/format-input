@@ -111,3 +111,10 @@ Thank you!
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## Mandatory Attribution
+
+**Any use, distribution, or modification of this software must include the following attribution:**
+
+> This software was developed by Glen Jasper (https://github.com/glenjasper),  
+> originally available at https://github.com/glenjasper/format-input
