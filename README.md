@@ -112,8 +112,12 @@ Thank you!
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## Mandatory Attribution
+## Required Attribution
 
-**Any use, distribution, or modification of this software must include the following attribution:**
+**Any use, distribution, or modification of this software must include one of the following attributions:**
 
 > This software was developed by Glen Jasper (https://github.com/glenjasper), originally available at https://github.com/glenjasper/format-input
+
+**or** (example citation):
+
+> Jasper G. (2024). *format_input.py* script. Available at: https://github.com/glenjasper/format-input (Accessed 21 July 2024)
