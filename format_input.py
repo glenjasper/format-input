@@ -7,6 +7,7 @@ import time
 import shutil
 import argparse
 import tempfile
+import warnings
 import traceback
 import xlsxwriter
 import numpy as np
@@ -250,6 +251,9 @@ class FormatInput:
         self.XLS_SHEET_WITHOUT_DOI = 'Without DOI'
         self.XLS_SHEET_DUPLICATES = 'Duplicates'
 
+        # Bad Summary
+        self.TXT_BAD_FILE = 'bad_lines_<type>.txt'
+
         # Xls Columns
         self.xls_col_item = 'Item'
         self.xls_col_title = 'Title'
@@ -405,6 +409,38 @@ class FormatInput:
         _information = ["%s: %s" % (i, j) for i, j in zip(array1, array2)]
         return " | ".join(_information)
 
+    def read_csv_with_audit(self, filepath, sep = ',', engine = None, encoding = None, return_df = True, **kwargs):
+        bad_line_numbers = []
+        with warnings.catch_warnings(record = True) as w:
+            warnings.simplefilter('always')
+            pd.read_csv(filepath, sep = sep, engine = engine, encoding = encoding, on_bad_lines = 'warn', **kwargs)
+
+            for warn in w:
+                msg = str(warn.message)
+
+                if 'Skipping line' in msg:
+                    match = re.search(r'Skipping line (\d+)', msg)
+                    if match:
+                        bad_line_numbers.append(int(match.group(1)))
+
+        bad_line_numbers = sorted(set(bad_line_numbers))
+
+        df = None
+        if return_df:
+            df = pd.read_csv(filepath, sep = sep, engine = engine, encoding = encoding, on_bad_lines = 'skip', **kwargs)
+
+        bad_lines = []
+        if bad_line_numbers:
+            bad_set = set(bad_line_numbers)
+
+            with open(filepath, encoding = encoding or 'utf-8', errors = 'replace') as fr:
+                for i, line in enumerate(fr, start = 1):
+                    if i in bad_set:
+                        bad_lines.append({'line_number': i,
+                                          'raw': line.rstrip('\n')})
+
+        return df, bad_lines
+
     def read_txt_file(self):
         content = open(self.INPUT_FILE, 'r').readlines()
 
@@ -545,7 +581,6 @@ class FormatInput:
                            self.embase_col_doi,
                            self.embase_col_document_type,
                            self.embase_col_language]
-
         elif self.TYPE_FILE == self.TYPE_SCIENCEDIRECT:
             _input_file = self.read_sciencedirect_file(_input_file)
             separator = '|'
@@ -591,10 +626,7 @@ class FormatInput:
                            self.cab_col_doi,
                            self.cab_col_language]
 
-        if self.TYPE_FILE in [self.TYPE_BVS, self.TYPE_CAB]:
-            df = pd.read_csv(filepath_or_buffer = _input_file, sep = separator, header = 0, index_col = False, on_bad_lines = 'skip')
-        else:
-            df = pd.read_csv(filepath_or_buffer = _input_file, sep = separator, header = 0, index_col = False) # low_memory = False
+        df, bad_lines = self.read_csv_with_audit(_input_file, sep = separator, header = 0, index_col = False, engine = 'python')
 
         # df = df.where(pd.notnull(df), '') # None
         df = df.replace({np.nan: ''}) # None
@@ -802,7 +834,8 @@ class FormatInput:
 
         collect_papers = {self.XLS_SHEET_UNIQUE: collect_unique,
                           self.XLS_SHEET_WITHOUT_DOI: collect_without_doi,
-                          self.XLS_SHEET_DUPLICATES: collect_duplicate}
+                          self.XLS_SHEET_DUPLICATES: collect_duplicate,
+                          'bad': bad_lines}
 
         return collect_papers
 
@@ -885,6 +918,15 @@ class FormatInput:
         if self.TYPE_FILE != self.TYPE_TXT:
             create_sheet(workbook, self.XLS_SHEET_WITHOUT_DOI, data_paper[self.XLS_SHEET_WITHOUT_DOI], cell_format_title, cell_format_row)
         create_sheet(workbook, self.XLS_SHEET_DUPLICATES, data_paper[self.XLS_SHEET_DUPLICATES], cell_format_title, cell_format_row)
+
+        bad_lines = data_paper['bad']
+        if bad_lines:
+            with open(self.TXT_BAD_FILE, 'w') as fw:
+                for line in bad_lines:
+                    fw.write(f"{line['line_number']}: {line['raw']}\n")
+        else:
+            if os.path.exists(self.TXT_BAD_FILE):
+                os.remove(self.TXT_BAD_FILE)
 
         workbook.close()
 
@@ -1676,6 +1718,7 @@ def main():
 
         ofi.LOG_FILE = os.path.join(ofi.OUTPUT_PATH, ofi.LOG_NAME)
         ofi.XLS_FILE = os.path.join(ofi.OUTPUT_PATH, ofi.XLS_FILE.replace('<type>', ofi.TYPE_FILE))
+        ofi.TXT_BAD_FILE = os.path.join(ofi.OUTPUT_PATH, ofi.TXT_BAD_FILE.replace('<type>', ofi.TYPE_FILE))
         ofi.show_print("#############################################################################", [ofi.LOG_FILE], font = ofi.BIGREEN)
         ofi.show_print("############################### Format Input ################################", [ofi.LOG_FILE], font = ofi.BIGREEN)
         ofi.show_print("#############################################################################", [ofi.LOG_FILE], font = ofi.BIGREEN)
@@ -1732,12 +1775,24 @@ def main():
         ofi.show_print("Input file: %s" % ofi.INPUT_FILE, [ofi.LOG_FILE])
         ofi.show_print("", [ofi.LOG_FILE])
 
+        n_bad = len(input_information['bad'])
+        if n_bad > 0:
+            ofi.show_print("Warning: %s" % ofi.TXT_BAD_FILE, [ofi.LOG_FILE], font = ofi.YELLOW)
+            ofi.show_print("  Bad lines: %s" % n_bad, [ofi.LOG_FILE])
+            ofi.show_print("", [ofi.LOG_FILE])
+
         ofi.save_summary_xls(input_information)
+        n_unique = len(input_information[ofi.XLS_SHEET_UNIQUE])
+        n_duplicates = len(input_information[ofi.XLS_SHEET_DUPLICATES])
+        n_total = n_unique + n_duplicates
         ofi.show_print("Output file: %s" % ofi.XLS_FILE, [ofi.LOG_FILE], font = ofi.GREEN)
-        ofi.show_print("  Unique documents: %s" % len(input_information[ofi.XLS_SHEET_UNIQUE]), [ofi.LOG_FILE])
-        ofi.show_print("  Duplicate documents: %s" % len(input_information[ofi.XLS_SHEET_DUPLICATES]), [ofi.LOG_FILE])
+        ofi.show_print("  Unique documents: %s" % n_unique, [ofi.LOG_FILE])
+        ofi.show_print("  Duplicate documents: %s" % n_duplicates, [ofi.LOG_FILE])
         if ofi.TYPE_FILE != ofi.TYPE_TXT:
-            ofi.show_print("  Documents without DOI: %s" % len(input_information[ofi.XLS_SHEET_WITHOUT_DOI]), [ofi.LOG_FILE])
+            n_without = len(input_information[ofi.XLS_SHEET_WITHOUT_DOI])
+            n_total += n_without
+            ofi.show_print("  Documents without DOI: %s" % n_without, [ofi.LOG_FILE])
+        ofi.show_print("  [Total: %s]" % n_total, [ofi.LOG_FILE])
 
         ofi.show_print("", [ofi.LOG_FILE])
         ofi.show_print(ofi.finish_time(start, "Elapsed time"), [ofi.LOG_FILE])
