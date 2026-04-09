@@ -626,10 +626,12 @@ class FormatInput:
                            self.cab_col_doi,
                            self.cab_col_language]
 
-        df, bad_lines = self.read_csv_with_audit(_input_file, sep = separator, header = 0, index_col = False, engine = 'python')
+        if self.TYPE_FILE in [self.TYPE_WOS]:
+            df, bad_lines = self.read_csv_with_audit(_input_file, sep = separator, header = 0, index_col = False)
+        else:
+            df, bad_lines = self.read_csv_with_audit(_input_file, sep = separator, header = 0, index_col = False, engine = 'python')
 
-        # df = df.where(pd.notnull(df), '') # None
-        df = df.replace({np.nan: ''}) # None
+        df = df.replace({np.nan: ''})
         df.columns = df.columns.str.strip()
         # print(df)
 
